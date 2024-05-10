@@ -18,45 +18,45 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class GameLoginInterface {
+//one interface is composed of 3 interfaces
+    private JFrame mainFrame;//this is the main interface
+    private JFrame registerFrame;//this is register interface
+    private JFrame loginFrame;//this is login interface
 
-    private JFrame mainFrame;
-    private JFrame registerFrame;
-    private JFrame loginFrame;
+    private JTextField usernameField;//a component that allows users to input text
+    private JPasswordField passwordField;//a component that allows users to input text while not displaying the text
 
-    private JTextField usernameField;
-    private JPasswordField passwordField;
-
-    private Map<String, String> users = new HashMap<>();
+    private Map<String, String> users = new HashMap<>();//键值对，第一个string是用户名，第二个string是密码
     private String userFile = "users.txt";
 
-    public GameLoginInterface() {
+    public GameLoginInterface() {//constructor
         loadUsers();
         createMainFrame();
         createRegisterFrame();
         createLoginFrame();
     }
-
+//loadUsers is used to get the users's information,get the hashmap named users
     private void loadUsers() {
-        try (BufferedReader br = new BufferedReader(new FileReader(userFile))) {
+        try (BufferedReader br = new BufferedReader(new FileReader(userFile))) {//构建了一个bufferedreader类，这个类的实例br可以读取文档信息
             String line;
-            while ((line = br.readLine()) != null) {
-                String[] parts = line.split(",");
+            while ((line = br.readLine()) != null) {//readline()方法，读取一整行的数据，若读到头了会返回null
+                String[] parts = line.split(",");//Based on the format,read the users name and password
                 if (parts.length >= 2) {
                     String username = parts[0];
                     String password = parts[1];
-                    users.put(username, password);
+                    users.put(username, password);//向名为users的hashmap中添加键对
                 }
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            e.printStackTrace();//暂且不太用理这一行，这是关于报错的，若找不到文件，会进入这里，输出报错信息
         }
     }
 
     private void saveUsers() {
-        try (BufferedWriter bw = new BufferedWriter(new FileWriter(userFile))) {
-            for (Map.Entry<String, String> entry : users.entrySet()) {
-                bw.write(entry.getKey() + "," + entry.getValue());
-                bw.newLine();
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(userFile))) {//bw is a instance of the class named BufferedWriter,this is used to write things in a file
+            for (Map.Entry<String, String> entry : users.entrySet()) {//遍历每一个键对
+                bw.write(entry.getKey() + "," + entry.getValue());//write in file
+                bw.newLine();//换行
             }
         } catch (IOException e) {
             e.printStackTrace();
