@@ -36,7 +36,7 @@ public class GridNumber {
             }
         }
     }
-
+//Amazing Algorithm!Genious ideas!
     private void moveRight1(int[][] numbers, int i, int j) {
         if(j==numbers[i].length-1){
             return;
