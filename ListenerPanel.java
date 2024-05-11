@@ -37,22 +37,3 @@ public abstract class ListenerPanel extends JPanel {
 
 }
 
-
-        this.setFocusable(true);
-    }
-
-    @Override
-    protected void processKeyEvent(KeyEvent e) {
-        super.processKeyEvent(e);
-        if (e.getID() == KeyEvent.KEY_PRESSED) {
-            switch (e.getKeyCode()) {
-                case KeyEvent.VK_RIGHT -> doMoveRight();
-                //todo: complete other move event
-            }
-        }
-    }
-
-
-    public abstract void doMoveRight();
-
-}
