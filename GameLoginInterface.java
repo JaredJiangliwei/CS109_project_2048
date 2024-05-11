@@ -9,10 +9,12 @@
 
 package project;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
 import java.io.*;
 import java.util.HashMap;
 import java.util.Map;
@@ -65,17 +67,56 @@ public class GameLoginInterface {
 
     private void createMainFrame() {
         mainFrame = new JFrame("2048游戏登录界面");
-        mainFrame.setSize(500, 500);
+        mainFrame.setSize(400, 450);
         mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        mainFrame.setLayout(new FlowLayout());
-        mainFrame.setLocationRelativeTo(null);
+        mainFrame.setLayout(new BorderLayout());//// 设置 BorderLayout(a kind of layout method)
+        mainFrame.setLocationRelativeTo(null);//make the window at the center of the screen
+        // 加载图片
+        BufferedImage originalImage = null;
+        try {
+            originalImage = ImageIO.read(new File("D:\\Program Files\\second\\2048游戏界面.png"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        // 创建北部面板用于放置图片
+        JPanel northPanel = new JPanel();
+        northPanel.setBackground(new Color(255, 255, 128));
+        Image scaledImage = originalImage.getScaledInstance(330, 330, Image.SCALE_SMOOTH);
+        ImageIcon imageIcon = new ImageIcon(scaledImage); // 替换为图片的实际路径
+        JLabel imageLabel = new JLabel(imageIcon);
+        northPanel.add(imageLabel);
+
+        JPanel whole = new JPanel();
+        whole.setBackground(new Color(255, 255, 128));
+        mainFrame.add(whole);
+
+        // 创建南部面板用于放置按钮
+        JPanel southPanel = new JPanel();
+        southPanel.setBackground(new Color(255, 255, 128));
+        southPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 10, 10)); // 设置按钮间的水平和垂直间距
+
 
         JButton visitorButton = new JButton("游客登录");
         JButton accountLoginButton = new JButton("账号登录");
         JButton registerButton = new JButton("注册账号");
 
+        visitorButton.setPreferredSize(new Dimension(100,60));
+        accountLoginButton.setPreferredSize(new Dimension(100,60));
+        registerButton.setPreferredSize(new Dimension(100,60));
+
+        southPanel.add(visitorButton);
+        southPanel.add(accountLoginButton);
+        southPanel.add(registerButton);
+
+        // 将面板添加到 BorderLayout 的对应区域
+        mainFrame.add(northPanel, BorderLayout.NORTH);
+        mainFrame.add(southPanel, BorderLayout.SOUTH);
+
         visitorButton.addActionListener(e -> {
             JOptionPane.showMessageDialog(mainFrame, "欢迎您，游客！");
+            GameFrame gameFrame = new GameFrame(670,530);
+            gameFrame.setVisible(true);
+            mainFrame.setVisible(false);
         });
 
         accountLoginButton.addActionListener(e -> {
@@ -88,14 +129,11 @@ public class GameLoginInterface {
             registerFrame.setVisible(true);
         });
 
-        mainFrame.add(visitorButton);
-        mainFrame.add(accountLoginButton);
-        mainFrame.add(registerButton);
     }
 
     private void createRegisterFrame() {
         registerFrame = new JFrame("注册账号");
-        registerFrame.setSize(500, 500);
+        registerFrame.setSize(500, 200);
         registerFrame.setLayout(new GridLayout(3, 2));
         registerFrame.setLocationRelativeTo(null);
 
@@ -135,7 +173,7 @@ public class GameLoginInterface {
 
     private void createLoginFrame() {
         loginFrame = new JFrame("账号登录");
-        loginFrame.setSize(500, 500);
+        loginFrame.setSize(500, 200);
         loginFrame.setLayout(new GridLayout(3, 2));
         loginFrame.setLocationRelativeTo(null);
 
@@ -151,6 +189,9 @@ public class GameLoginInterface {
 
                 if (users.containsKey(username) && users.get(username).equals(password)) {
                     JOptionPane.showMessageDialog(loginFrame, "登录成功！");
+                    GameFrame gameFrame = new GameFrame(670,530);
+                    gameFrame.setVisible(true);
+                    mainFrame.setVisible(false);
                 } else {
                     JOptionPane.showMessageDialog(loginFrame, "用户名或密码错误！");
                 }
@@ -186,5 +227,4 @@ public class GameLoginInterface {
         });
     }
     }
-
 
