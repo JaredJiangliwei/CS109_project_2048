@@ -1,29 +1,36 @@
-package project;
+package view;
 
-
+import controller.GameController;
+import util.ColorMap;
 
 import javax.swing.*;
 import java.awt.*;
 
 public class GameFrame extends JFrame {
 
+    private  JButton downBtn;
     private GameController controller;
     private JButton restartBtn;
     private JButton loadBtn;
 
     private JLabel stepLabel;
     private GamePanel gamePanel;
+    private JButton upBtn;
+    private JButton leftBtn;
+    private JButton rightBtn;
+    private JButton propsBtn;
+
 
     public GameFrame(int width, int height) {
-        this.setTitle("2024 CS109 Project Demo");//set title of the frame
-        this.setLayout(null);//no use,do not
-        this.setSize(width, height);//set size
+        this.setTitle("2024 CS109 Project Demo");
+        this.setLayout(null);
+        this.setSize(width, height);
         ColorMap.InitialColorMap();
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);//when we click the "close" button,the program ends
-        setLocationRelativeTo(null);//make the frame at the center of the screen
         gamePanel = new GamePanel((int) (this.getHeight() * 0.8));
         gamePanel.setLocation(this.getHeight() / 15, this.getWidth() / 15);
         this.add(gamePanel);
+
+
 
         this.controller = new GameController(gamePanel, gamePanel.getModel());
         this.restartBtn = createButton("Restart", new Point(500, 150), 110, 50);
@@ -31,6 +38,13 @@ public class GameFrame extends JFrame {
         this.stepLabel = createLabel("Start", new Font("serif", Font.ITALIC, 22), new Point(480, 50), 180, 50);
         gamePanel.setStepLabel(stepLabel);
 
+        //加小道具
+//        this.propsBtn = createButton("P", new Point(630, 10), 50, 50);
+//        this.propsBtn.addActionListener(e -> {
+//            //GamePanel.doremoveGrid();
+//            gamePanel.requestFocusInWindow();//enable key listener
+//        });
+        //游戏界面里 重来 load 上下左右 的按钮
         this.restartBtn.addActionListener(e -> {
             controller.restartGame();
             gamePanel.requestFocusInWindow();//enable key listener
@@ -41,6 +55,28 @@ public class GameFrame extends JFrame {
             gamePanel.requestFocusInWindow();//enable key listener
         });
         //todo: add other button here
+        this.upBtn = createButton("up", new Point(525, 310), 65, 30);
+        this.upBtn.addActionListener(e -> {
+            gamePanel.doMoveUp();
+            gamePanel.requestFocusInWindow();//enable key listener
+        });
+        this.leftBtn = createButton("left", new Point(480, 350), 65, 30);
+        this.leftBtn.addActionListener(e -> {
+            gamePanel.doMoveLeft();
+            gamePanel.requestFocusInWindow();//enable key listener
+        });
+        this.downBtn = createButton("down", new Point(525, 390), 67, 30);
+        this.downBtn.addActionListener(e -> {
+            gamePanel.doMoveDown();
+            gamePanel.requestFocusInWindow();//enable key listener
+        });
+        this.rightBtn = createButton("right", new Point(570, 350), 65, 30);
+        this.rightBtn.addActionListener(e -> {
+            gamePanel.doMoveRight();
+            gamePanel.requestFocusInWindow();//enable key listener
+        });
+
+
         this.setLocationRelativeTo(null);
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
     }
