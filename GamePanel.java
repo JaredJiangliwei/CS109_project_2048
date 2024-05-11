@@ -89,6 +89,10 @@ public class GamePanel extends ListenerPanel {
         this.steps++;
         this.stepLabel.setText(String.format("Step: %d", this.steps));
     }
+//    public void doremoveGrid(int i,int j){
+//        grids[i][j].setNumber(0);
+//        this.model.removeGrid(i,j);
+//    }
 
     public void setStepLabel(JLabel stepLabel) {
         this.stepLabel = stepLabel;
