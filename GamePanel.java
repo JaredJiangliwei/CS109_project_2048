@@ -1,5 +1,6 @@
-package project;
+package view;
 
+import model.GridNumber;
 
 import javax.swing.*;
 import java.awt.*;
@@ -17,7 +18,7 @@ public class GamePanel extends ListenerPanel {
     public GamePanel(int size) {
         this.setVisible(true);
         this.setFocusable(true);
-        this.setLayout(null);//
+        this.setLayout(null);
         this.setBackground(Color.DARK_GRAY);
         this.setSize(size, size);
         this.GRID_SIZE = size / COUNT;
@@ -63,6 +64,24 @@ public class GamePanel extends ListenerPanel {
         System.out.println("Click VK_RIGHT");
         this.afterMove();
         this.model.moveRight();
+        this.updateGridsNumber();
+    }
+    public void doMoveLeft() {
+        System.out.println("Click VK_LEFT");
+        this.afterMove();
+        this.model.moveLeft();
+        this.updateGridsNumber();
+    }
+    public void doMoveUp() {
+        System.out.println("Click VK_UP");
+        this.afterMove();
+        this.model.moveUp();
+        this.updateGridsNumber();
+    }
+    public void doMoveDown() {
+        System.out.println("Click VK_DOWN");
+        this.afterMove();
+        this.model.moveDown();
         this.updateGridsNumber();
     }
 
