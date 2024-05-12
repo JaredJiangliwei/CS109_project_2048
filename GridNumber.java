@@ -19,12 +19,8 @@ public class GridNumber {
     }
 
     public void initialNumbers() {
-        for (int i = 0; i < numbers.length; i++) {
-            for (int j = 0; j < numbers[i].length; j++) {
-                //todo: update generate numbers method
-                numbers[i][j] = random.nextInt(2) == 0 ? 4 : 0;
-            }
-        }
+        createNumber(numbers);
+        createNumber(numbers);
     }
     //todo: finish the method of four direction moving.
     public void moveRight() {
@@ -35,8 +31,9 @@ public class GridNumber {
                 }
             }
         }
+        createNumber(numbers);
     }
-//Amazing Algorithm!Genious ideas!
+
     private void moveRight1(int[][] numbers, int i, int j) {
         if(j==numbers[i].length-1){
             return;
@@ -59,6 +56,7 @@ public class GridNumber {
                 }
             }
         }
+        createNumber(numbers);
     }
 
     //用来实现移动的递归方法
@@ -84,6 +82,7 @@ public class GridNumber {
                 }
             }
         }
+        createNumber(numbers);
     }
 
     //用来实现移动的递归方法
@@ -109,6 +108,7 @@ public class GridNumber {
                 }
             }
         }
+        createNumber(numbers);
     }
 
     //用来实现移动的递归方法
@@ -126,6 +126,23 @@ public class GridNumber {
             moveDown1(numbers,i+1,j);
         }
     }
+
+    //随机产生一个新的
+    public void createNumber(int numbers[][]){
+        int i=random.nextInt(numbers.length);
+        int j=random.nextInt(numbers[0].length);
+        if(numbers[i][j]!=0){
+            createNumber(numbers);
+        }else{
+            int randomNumber=(random.nextInt(2)==0)?2:4;
+            this.numbers[i][j]=randomNumber;
+        }
+    }
+
+    public void removeGrid(int i, int j){
+        numbers[i][j]=0;
+    }
+
 
 
 
