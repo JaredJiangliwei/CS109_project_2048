@@ -7,23 +7,32 @@ import java.awt.*;
 
 
 public class GamePanel extends ListenerPanel {
-    private final int COUNT = 4;
+    public int getCount() {
+        return count;
+    }
+
+    public void setCount(int count) {
+        this.count = count;
+    }
+
+    private int count ;
     private GridComponent[][] grids;
 
     private GridNumber model;
     private JLabel stepLabel;
+    private JLabel scoreLabel;
     private int steps;
     private final int GRID_SIZE;
 
-    public GamePanel(int size) {
+    public GamePanel(int size,int count) {
         this.setVisible(true);
         this.setFocusable(true);
         this.setLayout(null);
         this.setBackground(Color.DARK_GRAY);
         this.setSize(size, size);
-        this.GRID_SIZE = size / COUNT;
-        this.grids = new GridComponent[COUNT][COUNT];
-        this.model = new GridNumber(COUNT, COUNT);
+        this.GRID_SIZE = size / count;
+        this.grids = new GridComponent[count][count];
+        this.model = new GridNumber(count, count);
         initialGame();
 
     }
@@ -54,9 +63,15 @@ public class GamePanel extends ListenerPanel {
         if(checkfull()){
             System.out.println("game over");
         }
+        for (int i = 0; i < grids.length; i++) {
+            for (int j = 0; j < grids[i].length; j++) {
+                if(model.getNumber(i,j)==1024){
+                    //创建恭喜到达1024成就框
+                }
+            }
+        }
         repaint();
     }
-
 
     /**
      * Implement the abstract method declared in ListenerPanel.
@@ -103,12 +118,16 @@ public class GamePanel extends ListenerPanel {
     public void afterMove() {
         this.steps++;
         this.stepLabel.setText(String.format("Step: %d", this.steps));
+        this.scoreLabel.setText(String.format("Score: %d", model.getScore()));
     }
 //    public void doremoveGrid(int i,int j){
 //        grids[i][j].setNumber(0);
 //        this.model.removeGrid(i,j);
 //    }
 
+    public void setScoreLabel(JLabel scoreLabel){
+        this.scoreLabel=scoreLabel;
+    }
     public void setStepLabel(JLabel stepLabel) {
         this.stepLabel = stepLabel;
     }
@@ -141,4 +160,5 @@ public class GamePanel extends ListenerPanel {
         }
         return a;
     }
+
 }
