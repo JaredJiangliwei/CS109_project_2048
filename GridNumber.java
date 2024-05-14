@@ -1,14 +1,30 @@
-package model;
+package project;
 
 import java.util.Arrays;
 import java.util.Random;
 
 
 public class GridNumber {
-    private final int X_COUNT;
-    private final int Y_COUNT;
+    public int getX_COUNT() {
+        return X_COUNT;
+    }
 
-    private int[][] numbers;
+    public int getY_COUNT() {
+        return Y_COUNT;
+    }
+
+    private final int X_COUNT;//width
+    private final int Y_COUNT;//height
+
+    public int[][] getNumbers() {
+        return numbers;
+    }
+
+    public void setNumbers(int[][] numbers) {
+        this.numbers = numbers;
+    }
+
+    private int[][] numbers;//the 2 dimensional array
     private int score;
 
     static Random random = new Random();
@@ -267,4 +283,3 @@ public class GridNumber {
         }
     }
 }
-
