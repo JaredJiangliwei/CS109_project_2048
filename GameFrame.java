@@ -1,16 +1,24 @@
-package view;
+package project;
 
-import controller.GameController;
-import util.ColorMap;
 
 import javax.swing.*;
 import java.awt.*;
 
 public class GameFrame extends JFrame {
 
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    private String username;
     private  JButton downBtn;
     private GameController controller;
     private JButton restartBtn;
+    private JButton saveBtn;
     private JButton loadBtn;
 
     private JLabel stepLabel;
@@ -22,20 +30,21 @@ public class GameFrame extends JFrame {
     private JButton propsBtn;
 
 
-    public GameFrame(int width, int height,int c) {
+    public GameFrame(int width, int height,String username,  int c) {
         this.setTitle("2024 CS109 Project Demo");
         this.setLayout(null);
         this.setSize(width, height);
-        ColorMap.InitialColorMap();
+        ColorMap.InitialColorMap();//调用ColorMap类中的静态方法
         gamePanel = new GamePanel((int) (this.getHeight() * 0.8),c);
         gamePanel.setLocation(this.getHeight() / 15, this.getWidth() / 15);
-        this.add(gamePanel);
+        this.add(gamePanel);//add gamepanel into the gameframe
 
 
-
-        this.controller = new GameController(gamePanel, gamePanel.getModel());
+        this.username=username;
+        this.controller = new GameController(gamePanel, gamePanel.getModel(),username);
         this.restartBtn = createButton("Restart", new Point(500, 150), 110, 50);
-        this.loadBtn = createButton("Load", new Point(500, 220), 110, 50);
+        this.saveBtn= createButton("Save",new Point(500,220),110,50);
+        this.loadBtn = createButton("Load", new Point(500, 290), 110, 50);
         this.stepLabel = createLabel("Start", new Font("serif", Font.ITALIC, 22), new Point(480, 50), 180, 50);
         gamePanel.setStepLabel(stepLabel);
         this.scoreLabel=createLabel("",new Font("serif", Font.ITALIC, 22), new Point(480, 100), 180, 50);
@@ -53,28 +62,33 @@ public class GameFrame extends JFrame {
             controller.restartGame();
             gamePanel.requestFocusInWindow();//enable key listener
         });
+        this.saveBtn.addActionListener(e->{
+            System.out.println("savebutton clicked");
+            controller.saveGame();
+            gamePanel.requestFocusInWindow();
+        });
         this.loadBtn.addActionListener(e -> {
-            String string = JOptionPane.showInputDialog(this, "Input path:");
-            System.out.println(string);
+            System.out.println("loadbutton clicked");
+            controller.loadGame();
             gamePanel.requestFocusInWindow();//enable key listener
         });
         //todo: add other button here
-        this.upBtn = createButton("up", new Point(525, 310), 65, 30);
+        this.upBtn = createButton("up", new Point(525, 360), 65, 30);
         this.upBtn.addActionListener(e -> {
             gamePanel.doMoveUp();
             gamePanel.requestFocusInWindow();//enable key listener
         });
-        this.leftBtn = createButton("left", new Point(480, 350), 65, 30);
+        this.leftBtn = createButton("left", new Point(480, 400), 65, 30);
         this.leftBtn.addActionListener(e -> {
             gamePanel.doMoveLeft();
             gamePanel.requestFocusInWindow();//enable key listener
         });
-        this.downBtn = createButton("down", new Point(525, 390), 67, 30);
+        this.downBtn = createButton("down", new Point(525, 440), 67, 30);
         this.downBtn.addActionListener(e -> {
             gamePanel.doMoveDown();
             gamePanel.requestFocusInWindow();//enable key listener
         });
-        this.rightBtn = createButton("right", new Point(570, 350), 65, 30);
+        this.rightBtn = createButton("right", new Point(570, 400), 65, 30);
         this.rightBtn.addActionListener(e -> {
             gamePanel.doMoveRight();
             gamePanel.requestFocusInWindow();//enable key listener
