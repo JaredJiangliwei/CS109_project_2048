@@ -191,7 +191,7 @@ public class GameLoginInterface {
 
                 if (users.containsKey(username) && users.get(username).equals(password)) {
                     JOptionPane.showMessageDialog(loginFrame, "登录成功！");
-                    GameFrame gameFrame = new GameFrame(670,530);
+                    GameFrame gameFrame = new GameFrame(670,530,4);
                     gameFrame.setVisible(true);
                     mainFrame.setVisible(false);
                 } else {
@@ -238,7 +238,7 @@ public class GameLoginInterface {
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS)); // Y_AXIS 表示垂直布局
 
         JButton classic = new JButton("无尽模式");
-        JButton button2 = new JButton("1024模式");
+        JButton button2 = new JButton("经典模式");
         JButton button3 = new JButton("5*5模式");
 
         classic.setPreferredSize(new Dimension(100,60));
@@ -250,13 +250,13 @@ public class GameLoginInterface {
         modeFrame.setVisible(true);
 
         classic.addActionListener(e -> {
-            GameFrame gameFrame = new GameFrame(670,530);
+            GameFrame gameFrame = new GameFrame(670,530,4);
             gameFrame.setVisible(true);
             mainFrame.setVisible(false);
             modeFrame.setVisible(false);
         });
-        button2.addActionListener(e -> {
-            GameFrame gameFrame = new GameFrame(670,530);
+        button3.addActionListener(e -> {
+            GameFrame gameFrame = new GameFrame(670,530,3);
             gameFrame.setVisible(true);
             mainFrame.setVisible(false);
             modeFrame.setVisible(false);
