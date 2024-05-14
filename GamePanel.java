@@ -51,6 +51,9 @@ public class GamePanel extends ListenerPanel {
                 grids[i][j].setNumber(model.getNumber(i, j));
             }
         }
+        if(checkfull()){
+            System.out.println("game over");
+        }
         repaint();
     }
 
@@ -61,28 +64,40 @@ public class GamePanel extends ListenerPanel {
      */
     @Override
     public void doMoveRight() {
-        System.out.println("Click VK_RIGHT");
-        this.afterMove();
-        this.model.moveRight();
-        this.updateGridsNumber();
+        if(model.isMovedright()){
+            System.out.println("Click VK_RIGHT");
+            this.afterMove();
+            this.model.moveRight();
+            this.updateGridsNumber();
+        }
+
     }
     public void doMoveLeft() {
-        System.out.println("Click VK_LEFT");
-        this.afterMove();
-        this.model.moveLeft();
-        this.updateGridsNumber();
+        if(model.isMovedleft()){
+            System.out.println("Click VK_LEFT");
+            this.afterMove();
+            this.model.moveLeft();
+            this.updateGridsNumber();
+        }
+
     }
     public void doMoveUp() {
-        System.out.println("Click VK_UP");
-        this.afterMove();
-        this.model.moveUp();
-        this.updateGridsNumber();
+        if(model.isMovedup()){
+            System.out.println("Click VK_UP");
+            this.afterMove();
+            this.model.moveUp();
+            this.updateGridsNumber();
+        }
+
     }
     public void doMoveDown() {
-        System.out.println("Click VK_DOWN");
-        this.afterMove();
-        this.model.moveDown();
-        this.updateGridsNumber();
+        if(model.isMoveddown()){
+            System.out.println("Click VK_DOWN");
+            this.afterMove();
+            this.model.moveDown();
+            this.updateGridsNumber();
+        }
+
     }
 
     public void afterMove() {
@@ -96,5 +111,34 @@ public class GamePanel extends ListenerPanel {
 
     public void setStepLabel(JLabel stepLabel) {
         this.stepLabel = stepLabel;
+    }
+
+    public boolean checkfull(){
+        boolean a=true;
+        for (int i = 0; i < grids.length; i++) {
+            for (int j = 0; j < grids[i].length; j++) {
+                if(grids[i][j].getNumber()==0){
+                    a=false;
+                    break;
+                }else if(grids[i][j].getNumber()==grids[i][j].getNumber());
+            }
+        }
+        for (int i = 0; i < grids.length-1; i++) {
+            for (int j = 0; j < grids[i].length; j++) {
+                if(grids[i][j].getNumber()==grids[i+1][j].getNumber()){
+                    a=false;
+                    break;
+                }
+            }
+        }
+        for (int i = 0; i < grids.length; i++) {
+            for (int j = 0; j < grids[i].length-1; j++) {
+                if(grids[i][j].getNumber()==grids[i][j+1].getNumber()){
+                    a=false;
+                    break;
+                }
+            }
+        }
+        return a;
     }
 }
