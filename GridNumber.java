@@ -3,6 +3,7 @@ package model;
 import java.util.Arrays;
 import java.util.Random;
 
+
 public class GridNumber {
     private final int X_COUNT;
     private final int Y_COUNT;
@@ -10,6 +11,82 @@ public class GridNumber {
     private int[][] numbers;
 
     static Random random = new Random();
+    private boolean movedright;
+    private boolean movedleft;
+    private boolean movedup;
+    private boolean moveddown;
+
+    public boolean isMovedright() {
+        movedright=false;
+        for (int i =0; i < numbers.length; i++) {
+            for(int j=0;j<numbers[i].length-1;j++){
+                for (int k=j+1;k<numbers[i].length;k++){
+                    if (numbers[i][k]==0){
+                        movedright=true;
+                        break;
+                    }else if(numbers[i][j+1]==numbers[i][j]){
+                        movedright=true;
+                        break;
+                    }
+                }
+            }
+        }
+        return movedright;
+    }
+
+    public boolean isMovedleft() {
+        movedleft=false;
+        for (int i =0; i < numbers.length; i++) {
+            for(int j=numbers[i].length-1;j>0;j--){
+                for (int k=j-1;k>=0;k--){
+                    if (numbers[i][k]==0){
+                        movedleft=true;
+                        break;
+                    }else if(numbers[i][j-1]==numbers[i][j]){
+                        movedleft=true;
+                        break;
+                    }
+                }
+            }
+        }
+        return movedleft;
+    }
+
+    public boolean isMovedup() {
+        movedup=false;
+        for (int i =numbers.length-1; i>0; i--) {
+            for(int j=0;j<numbers[i].length;j++){
+                for (int k=i-1;k>=0;k--){
+                    if (numbers[k][j]==0){
+                        movedup=true;
+                        break;
+                    }else if(numbers[i-1][j]==numbers[i][j]){
+                        movedup=true;
+                        break;
+                    }
+                }
+            }
+        }
+        return movedup;
+    }
+
+    public boolean isMoveddown() {
+        moveddown=false;
+        for (int i =0; i<numbers.length-1; i++) {
+            for(int j=0;j<numbers[i].length;j++){
+                for (int k=i+1;k<numbers.length;k++){
+                    if (numbers[k][j]==0){
+                        moveddown=true;
+                        break;
+                    }else if(numbers[i+1][j]==numbers[i][j]){
+                        moveddown=true;
+                        break;
+                    }
+                }
+            }
+        }
+        return moveddown;
+    }
 
     public GridNumber(int xCount, int yCount) {
         this.X_COUNT = xCount;
@@ -124,24 +201,59 @@ public class GridNumber {
             numbers[i+1][j]=numbers[i][j];
             numbers[i][j]=0;
             moveDown1(numbers,i+1,j);
+
         }
     }
 
     //随机产生一个新的
     public void createNumber(int numbers[][]){
-        int i=random.nextInt(numbers.length);
-        int j=random.nextInt(numbers[0].length);
-        if(numbers[i][j]!=0){
-            createNumber(numbers);
-        }else{
-            int randomNumber=(random.nextInt(2)==0)?2:4;
-            this.numbers[i][j]=randomNumber;
+        if(checkfull()==false){
+            int i=random.nextInt(numbers.length);
+            int j=random.nextInt(numbers[0].length);
+            if(numbers[i][j]!=0){
+                createNumber(numbers);
+            }else{
+                int randomNumber=(random.nextInt(2)==0)?2:4;
+                this.numbers[i][j]=randomNumber;}
         }
+
+
     }
 
-    public void removeGrid(int i, int j){
-        numbers[i][j]=0;
+//    public void removeGrid(int i, int j){
+//        numbers[i][j]=0;
+//    }
+
+    public boolean checkfull(){
+        boolean a=true;
+        for (int i = 0; i < numbers.length; i++) {
+            for (int j = 0; j < numbers[i].length; j++) {
+                if(numbers[i][j]==0){
+                    a=false;
+                    break;
+                }
+            }
+        }
+        for (int i = 0; i < numbers.length-1; i++) {
+            for (int j = 0; j < numbers[i].length; j++) {
+                if(numbers[i][j]==numbers[i+1][j]){
+                    a=false;
+                    break;
+                }
+            }
+        }
+        for (int i = 0; i < numbers.length; i++) {
+            for (int j = 0; j < numbers[i].length-1; j++) {
+                if(numbers[i][j]==numbers[i][j+1]){
+                    a=false;
+                    break;
+                }
+            }
+        }
+        return a;
     }
+
+
 
 
 
