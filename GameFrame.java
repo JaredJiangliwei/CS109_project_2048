@@ -14,6 +14,7 @@ public class GameFrame extends JFrame {
     private JButton loadBtn;
 
     private JLabel stepLabel;
+    private JLabel scoreLabel;
     private GamePanel gamePanel;
     private JButton upBtn;
     private JButton leftBtn;
@@ -21,12 +22,12 @@ public class GameFrame extends JFrame {
     private JButton propsBtn;
 
 
-    public GameFrame(int width, int height) {
+    public GameFrame(int width, int height,int c) {
         this.setTitle("2024 CS109 Project Demo");
         this.setLayout(null);
         this.setSize(width, height);
         ColorMap.InitialColorMap();
-        gamePanel = new GamePanel((int) (this.getHeight() * 0.8));
+        gamePanel = new GamePanel((int) (this.getHeight() * 0.8),c);
         gamePanel.setLocation(this.getHeight() / 15, this.getWidth() / 15);
         this.add(gamePanel);
 
@@ -37,6 +38,9 @@ public class GameFrame extends JFrame {
         this.loadBtn = createButton("Load", new Point(500, 220), 110, 50);
         this.stepLabel = createLabel("Start", new Font("serif", Font.ITALIC, 22), new Point(480, 50), 180, 50);
         gamePanel.setStepLabel(stepLabel);
+        this.scoreLabel=createLabel("",new Font("serif", Font.ITALIC, 22), new Point(480, 100), 180, 50);
+        gamePanel.setScoreLabel(scoreLabel);
+
 
         //加小道具
 //        this.propsBtn = createButton("P", new Point(630, 10), 50, 50);
@@ -75,6 +79,7 @@ public class GameFrame extends JFrame {
             gamePanel.doMoveRight();
             gamePanel.requestFocusInWindow();//enable key listener
         });
+
 
 
         this.setLocationRelativeTo(null);
