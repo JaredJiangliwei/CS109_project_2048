@@ -9,6 +9,7 @@ public class GridNumber {
     private final int Y_COUNT;
 
     private int[][] numbers;
+    private int score;
 
     static Random random = new Random();
     private boolean movedright;
@@ -94,12 +95,11 @@ public class GridNumber {
         this.numbers = new int[this.X_COUNT][this.Y_COUNT];
         this.initialNumbers();
     }
-
     public void initialNumbers() {
         createNumber(numbers);
         createNumber(numbers);
+        score=0;
     }
-    //todo: finish the method of four direction moving.
     public void moveRight() {
         for (int i =0; i < numbers.length; i++) {
             for(int j=numbers[i].length-2;j>=0;j--){
@@ -110,7 +110,6 @@ public class GridNumber {
         }
         createNumber(numbers);
     }
-
     private void moveRight1(int[][] numbers, int i, int j) {
         if(j==numbers[i].length-1){
             return;
@@ -118,6 +117,7 @@ public class GridNumber {
         if(numbers[i][j+1]==numbers[i][j]){
             numbers[i][j+1]=numbers[i][j+1]+numbers[i][j];
             numbers[i][j]=0;
+            score+=numbers[i][j+1];
             moveRight1(numbers,i,j+1);
         }else if(numbers[i][j+1]==0){
             numbers[i][j+1]=numbers[i][j];
@@ -135,8 +135,6 @@ public class GridNumber {
         }
         createNumber(numbers);
     }
-
-    //用来实现移动的递归方法
     private void moveLeft1(int[][] numbers, int i, int j) {
         if(j==0){
             return;
@@ -144,6 +142,7 @@ public class GridNumber {
         if(numbers[i][j-1]==numbers[i][j]){
             numbers[i][j-1]=numbers[i][j-1]+numbers[i][j];
             numbers[i][j]=0;
+            score+=numbers[i][j-1];
             moveLeft1(numbers,i,j-1);
         }else if(numbers[i][j-1]==0){
             numbers[i][j-1]=numbers[i][j];
@@ -161,8 +160,6 @@ public class GridNumber {
         }
         createNumber(numbers);
     }
-
-    //用来实现移动的递归方法
     private void moveUp1(int[][] numbers, int i, int j) {
         if(i==0){
             return;
@@ -170,6 +167,7 @@ public class GridNumber {
         if(numbers[i-1][j]==numbers[i][j]){
             numbers[i-1][j]+=numbers[i][j];
             numbers[i][j]=0;
+            score+=numbers[i-1][j];
             moveUp1(numbers,i-1,j);
         }else if(numbers[i-1][j]==0){
             numbers[i-1][j]=numbers[i][j];
@@ -187,8 +185,6 @@ public class GridNumber {
         }
         createNumber(numbers);
     }
-
-    //用来实现移动的递归方法
     private void moveDown1(int[][] numbers, int i, int j) {
         if(i==numbers.length-1){
             return;
@@ -196,6 +192,7 @@ public class GridNumber {
         if(numbers[i+1][j]==numbers[i][j]){
             numbers[i+1][j]+=numbers[i][j];
             numbers[i][j]=0;
+            score+=numbers[i+1][j];
             moveDown1(numbers,i+1,j);
         }else if(numbers[i+1][j]==0){
             numbers[i+1][j]=numbers[i][j];
@@ -204,8 +201,6 @@ public class GridNumber {
 
         }
     }
-
-    //随机产生一个新的
     public void createNumber(int numbers[][]){
         if(checkfull()==false){
             int i=random.nextInt(numbers.length);
@@ -254,10 +249,13 @@ public class GridNumber {
     }
 
 
+    public int getScore() {
+        return score;
+    }
 
-
-
-
+    public void setScore(int score) {
+        this.score = score;
+    }
 
     public int getNumber(int i, int j) {
         return numbers[i][j];
