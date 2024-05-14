@@ -1,6 +1,5 @@
-package view;
+package project;
 
-import model.GridNumber;
 
 import javax.swing.*;
 import java.awt.*;
@@ -19,8 +18,27 @@ public class GamePanel extends ListenerPanel {
     private GridComponent[][] grids;
 
     private GridNumber model;
+
+    public JLabel getStepLabel() {
+        return stepLabel;
+    }
+
     private JLabel stepLabel;
+
+    public JLabel getScoreLabel() {
+        return scoreLabel;
+    }
+
     private JLabel scoreLabel;
+
+    public int getSteps() {
+        return steps;
+    }
+
+    public void setSteps(int steps) {
+        this.steps = steps;
+    }
+
     private int steps;
     private final int GRID_SIZE;
 
