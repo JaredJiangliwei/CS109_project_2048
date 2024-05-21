@@ -1,5 +1,6 @@
-package project;
+package view;
 
+import model.GridNumber;
 
 import javax.swing.*;
 import java.awt.*;
@@ -178,5 +179,6 @@ public class GamePanel extends ListenerPanel {
         }
         return a;
     }
+
 
 }
