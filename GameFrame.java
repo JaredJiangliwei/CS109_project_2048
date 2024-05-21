@@ -1,11 +1,12 @@
-package project;
+package view;
 
+import controller.GameController;
+import util.ColorMap;
 
 import javax.swing.*;
 import java.awt.*;
 
 public class GameFrame extends JFrame {
-
     public String getUsername() {
         return username;
     }
@@ -60,7 +61,9 @@ public class GameFrame extends JFrame {
         //游戏界面里 重来 load 上下左右 的按钮
         this.restartBtn.addActionListener(e -> {
             controller.restartGame();
+            this.setVisible(false);
             gamePanel.requestFocusInWindow();//enable key listener
+
         });
         this.saveBtn.addActionListener(e->{
             System.out.println("savebutton clicked");
@@ -117,5 +120,6 @@ public class GameFrame extends JFrame {
         this.add(label);
         return label;
     }
+
 
 }
