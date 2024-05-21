@@ -1,7 +1,13 @@
-package project;
+package controller;
+
+import model.GridNumber;
+import view.GameFrame;
+import view.GameLoginInterface;
+import view.GamePanel;
 
 import javax.swing.*;
 import java.io.*;
+
 
 /**
  * This class is used for interactive with JButton in GameFrame.
@@ -18,7 +24,9 @@ public class GameController {
         this.usersname=usersname;
     }
     public void restartGame() {
-        System.out.println("Do restart game here");
+        GameLoginInterface frame=new GameLoginInterface();
+        frame.modeChoose();
+
     }
 
     public void saveGame(){
