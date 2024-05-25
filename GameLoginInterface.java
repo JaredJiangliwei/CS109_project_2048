@@ -236,27 +236,73 @@ public class GameLoginInterface {
     }
 
     public void modeChoose() {
+
         modeFrame = new JFrame("模式选择");
-        modeFrame.setSize(500, 600);
+        modeFrame.setSize(400, 200);
         modeFrame.setLocationRelativeTo(null);
+        modeFrame.setBackground(new Color(255, 255, 128));
         modeFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        JPanel panel = new JPanel();
-        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS)); // Y_AXIS 表示垂直布局
 
-        JButton classic = new JButton("经典模式");
-//        JButton button2 = new JButton("经典模式");
-        JButton button3 = new JButton("5*5模式");
+        // 创建主面板并设置布局为BorderLayout
+        JPanel mainPanel = new JPanel(new BorderLayout());
 
-        classic.setPreferredSize(new Dimension(100, 60));
+        // 创建顶部标签并设置文本和居中
+        JLabel titleLabel = new JLabel("模式选择");
+        titleLabel.setHorizontalAlignment(JLabel.CENTER); // 水平居中
+        Font font = new Font("Serif", Font.PLAIN, 30); // Serif是字体名称，Font.PLAIN是样式（普通），16是字体大小
+        titleLabel.setFont(font);
+        // 如果需要垂直居中，可以将标签添加到一个新的JPanel中，并设置该面板的BorderLayout
 
-        panel.add(classic);
-//        panel.add(button2);
-        panel.add(button3);
-        modeFrame.add(panel, BorderLayout.CENTER);
+        // 将顶部标签添加到主面板的NORTH位置
+        mainPanel.add(titleLabel, BorderLayout.NORTH);
+
+        // 创建竖直方向的面板来放置按钮
+        JPanel buttonPanel = new JPanel();
+
+        buttonPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 20, 30)); // 竖直布局
+//        buttonPanel.setBackground(new Color(255, 255, 128));
+
+        // 创建两个按钮并添加到竖直面板中
+        JButton button1 = new JButton("经典模式");
+        JButton button2 = new JButton("5*5模式");
+        button1.setSize(500,300);
+        buttonPanel.add(button1);
+        buttonPanel.add(button2);
+
+        // 添加竖直面板到主面板的CENTER位置（或根据需要选择其他位置）
+        mainPanel.add(buttonPanel, BorderLayout.SOUTH);
+        modeFrame.getContentPane().add(mainPanel);
         modeFrame.setVisible(true);
 
-        classic.addActionListener(e -> {
+//        // 将主面板添加到JFrame的内容窗格
+//        modeFrame.getContentPane().add(mainPanel);
+
+
+
+
+
+
+
+
+
+
+//        JPanel panel = new JPanel();
+//        buttonPanel.setBackground(new Color(255, 255, 128));
+//        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS)); // Y_AXIS 表示垂直布局
+//
+//        JButton classic = new JButton("经典模式");
+//        JButton button3 = new JButton("5*5模式");
+//
+//        classic.setPreferredSize(new Dimension(100, 60));
+//
+//        panel.add(classic);
+////        panel.add(button2);
+//        panel.add(button3);
+//        modeFrame.add(panel, BorderLayout.CENTER);
+//        modeFrame.setVisible(true);
+
+        button1.addActionListener(e -> {
 
             GameFrame gameFrame = new GameFrame(670, 530, username, 4);
 
@@ -264,7 +310,7 @@ public class GameLoginInterface {
             mainFrame.setVisible(false);
             modeFrame.setVisible(false);
         });
-        button3.addActionListener(e -> {
+        button2.addActionListener(e -> {
             GameFrame gameFrame = new GameFrame(670, 530, username, 5);
             gameFrame.setVisible(true);
             mainFrame.setVisible(false);
