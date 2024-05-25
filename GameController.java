@@ -1,9 +1,6 @@
-package controller;
+package project;
 
-import model.GridNumber;
-import view.GameFrame;
-import view.GameLoginInterface;
-import view.GamePanel;
+
 
 import javax.swing.*;
 import java.io.*;
@@ -96,28 +93,69 @@ public class GameController {
             String line;
             line = reader.readLine();
             if(line==null){
-                System.out.println("用户尚未保存过数据");
+                System.out.println("用户尚未保存过数据，请先保存数据");
                 JOptionPane.showMessageDialog(null,"You have not saved before");
                 return;
             }
-            int sizesaved = Integer.parseInt(line);
+
+            int sizesaved;
+            //check if the first line is a single integer
+            try {
+                sizesaved = Integer.parseInt(line);
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(null,"File Format Error: the content's format is incorrect");
+                return;
+            }
+            //if the size of the board does not match current board : return;
             if(sizesaved!=size){
                 System.out.println("用户尚未保存过此类长宽数组的数据");
                 JOptionPane.showMessageDialog(null,"You have not saved this mode before");
                 return;
             }
+
             line= reader.readLine();
-            int stepsaved = Integer.parseInt(line);
+            int stepsaved;
+            try {
+                stepsaved = Integer.parseInt(line);
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(null,"File Format Error: the content's format is incorrect");
+                return;
+            }
             line = reader.readLine();
-            int score = Integer.parseInt(line);
+            int score ;
+            try {
+                score = Integer.parseInt(line);
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(null,"File Format Error: the content's format is incorrect");
+                return;
+            }
             int [][] records = new int[sizesaved][sizesaved];
-            int row=0;
-            while((line = reader.readLine())!=null){
+            for (int row = 0; row < sizesaved; row++) {
+                line = reader.readLine();
                 String[] values = line.split(" ");
-                for(int col =0;col< values.length;col++){
-                    records[row][col]=Integer.parseInt(values[col]);
+                if(values.length!=size){
+                    JOptionPane.showMessageDialog(null,"File Format Error: the content's format is incorrect");
+                    return;
                 }
-                row++;
+                for(int col=0;col<sizesaved;col++ ){
+                    int value;
+                    try {
+                        value = Integer.parseInt(values[col]);
+                        records[row][col] = value;
+                        if(!isValidNumber(value)){
+                            JOptionPane.showMessageDialog(null,"File Format Error: the content's is not a valid number in 2048");
+                            return;
+                        }
+                    } catch (NumberFormatException e) {
+                        JOptionPane.showMessageDialog(null,"File Format Error: the content's format is incorrect");
+                        return;
+                    }
+                }
+            }
+            line = reader.readLine();
+            if(line!=null){
+                JOptionPane.showMessageDialog(null,"File Format Error: the content's format is incorrect");
+                return;
             }
             model.setScore(score);
             view.getScoreLabel().setText(String.format("Score: %d", model.getScore()));
@@ -132,6 +170,14 @@ public class GameController {
         } catch (IOException e){
             e.printStackTrace();
         }
+    }
+    //check if the number in the file is valid number in 2048 i.e.0 2 4 8 16 32 64 128 256 512 1024 ......
+    public static boolean isValidNumber(int number) {
+        // 检查数字是否为0或2的幂次方，且在0到2048之间
+        if (number == 0) {
+            return true;
+        }
+        return (number >= 2 ) && (number & (number - 1)) == 0;
     }
     //todo: add other methods such as loadGame, saveGame...
     public static void main(String[] args) {
