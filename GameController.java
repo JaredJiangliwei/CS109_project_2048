@@ -22,7 +22,7 @@ public class GameController {
     }
     public void restartGame() {
         GameLoginInterface frame=new GameLoginInterface();
-        frame.modeChoose();
+        frame.display();
 
     }
 
