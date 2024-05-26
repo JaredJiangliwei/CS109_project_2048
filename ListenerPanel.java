@@ -1,5 +1,7 @@
 package view;
 
+import util.SoundEffectPlayer;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -20,14 +22,37 @@ public abstract class ListenerPanel extends JPanel {
         super.processKeyEvent(e);
         if (e.getID() == KeyEvent.KEY_PRESSED) {
             switch (e.getKeyCode()) {
-                case KeyEvent.VK_RIGHT -> doMoveRight();
-                case KeyEvent.VK_LEFT -> doMoveLeft();
-                case KeyEvent.VK_UP -> doMoveUp();
-                case KeyEvent.VK_DOWN -> doMoveDown();
+                case KeyEvent.VK_RIGHT :
+                    doMoveRight();
+                    new Thread(SoundEffectPlayer::SlideSoundEffect).start();
+                    break;
+                case KeyEvent.VK_LEFT :
+                    doMoveLeft();
+                    new Thread(SoundEffectPlayer::SlideSoundEffect).start();
+                    break;
+                case KeyEvent.VK_UP :
+                    doMoveUp();
+                    new Thread(SoundEffectPlayer::SlideSoundEffect).start();
+                    break;
+                case KeyEvent.VK_DOWN :
+                    doMoveDown();
+                    new Thread(SoundEffectPlayer::SlideSoundEffect).start();
+                    break;
                 //todo: complete other move event
             }
         }
     }
+//    protected void processMouseEvent(MouseEvent e) {
+//        super.processMouseEvent(e);
+//        if (e.getID() == MouseEvent.MOUSE_PRESSED) {
+//            switch (e.getButton()) {
+//                case MouseEvent.BUTTON3 -> doMoveRight();
+//                case MouseEvent.BUTTON1-> doMoveLeft();
+//
+//                //todo: complete other move event
+//            }
+//        }
+//    }
 
 
     public abstract void doMoveRight();
