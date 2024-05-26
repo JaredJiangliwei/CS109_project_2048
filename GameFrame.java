@@ -2,6 +2,7 @@ package view;
 
 import controller.GameController;
 import util.ColorMap;
+import util.SoundEffectPlayer;
 
 import javax.swing.*;
 import java.awt.*;
@@ -78,21 +79,26 @@ public class GameFrame extends JFrame {
         //todo: add other button here
         this.upBtn = createButton("up", new Point(525, 360), 65, 30);
         this.upBtn.addActionListener(e -> {
+            new Thread(SoundEffectPlayer::SlideSoundEffect).start();
+            new Thread(SoundEffectPlayer::SlideSoundEffect).start();
             gamePanel.doMoveUp();
             gamePanel.requestFocusInWindow();//enable key listener
         });
         this.leftBtn = createButton("left", new Point(480, 400), 65, 30);
         this.leftBtn.addActionListener(e -> {
+            new Thread(SoundEffectPlayer::SlideSoundEffect).start();
             gamePanel.doMoveLeft();
             gamePanel.requestFocusInWindow();//enable key listener
         });
         this.downBtn = createButton("down", new Point(525, 440), 67, 30);
         this.downBtn.addActionListener(e -> {
+            new Thread(SoundEffectPlayer::SlideSoundEffect).start();
             gamePanel.doMoveDown();
             gamePanel.requestFocusInWindow();//enable key listener
         });
         this.rightBtn = createButton("right", new Point(570, 400), 65, 30);
         this.rightBtn.addActionListener(e -> {
+            new Thread(SoundEffectPlayer::SlideSoundEffect).start();
             gamePanel.doMoveRight();
             gamePanel.requestFocusInWindow();//enable key listener
         });
