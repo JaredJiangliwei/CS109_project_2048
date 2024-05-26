@@ -79,17 +79,22 @@ public class GamePanel extends ListenerPanel {
                 grids[i][j].setNumber(model.getNumber(i, j));
             }
         }
+        repaint();
         if(checkfull()){
+            JOptionPane.showMessageDialog(null, "Game Over！");
             System.out.println("game over");
         }
+
         for (int i = 0; i < grids.length; i++) {
             for (int j = 0; j < grids[i].length; j++) {
                 if(model.getNumber(i,j)==1024){
-                    //创建恭喜到达1024成就框
+                    JOptionPane.showMessageDialog(null, "恭喜合成1024");
+                } else if (model.getNumber(i,j)==1024) {
+                    JOptionPane.showMessageDialog(null, "恭喜合成2048");
                 }
             }
         }
-        repaint();
+
     }
 
     /**
@@ -100,8 +105,8 @@ public class GamePanel extends ListenerPanel {
     public void doMoveRight() {
         if(model.isMovedright()){
             System.out.println("Click VK_RIGHT");
-            this.afterMove();
             this.model.moveRight();
+            this.afterMove();
             this.updateGridsNumber();
         }
 
@@ -109,8 +114,8 @@ public class GamePanel extends ListenerPanel {
     public void doMoveLeft() {
         if(model.isMovedleft()){
             System.out.println("Click VK_LEFT");
-            this.afterMove();
             this.model.moveLeft();
+            this.afterMove();
             this.updateGridsNumber();
         }
 
@@ -118,8 +123,8 @@ public class GamePanel extends ListenerPanel {
     public void doMoveUp() {
         if(model.isMovedup()){
             System.out.println("Click VK_UP");
-            this.afterMove();
             this.model.moveUp();
+            this.afterMove();
             this.updateGridsNumber();
         }
 
@@ -127,11 +132,10 @@ public class GamePanel extends ListenerPanel {
     public void doMoveDown() {
         if(model.isMoveddown()){
             System.out.println("Click VK_DOWN");
-            this.afterMove();
             this.model.moveDown();
+            this.afterMove();
             this.updateGridsNumber();
         }
-
     }
 
     public void afterMove() {
