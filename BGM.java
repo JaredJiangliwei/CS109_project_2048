@@ -10,7 +10,7 @@ public class BGM {
     public static void playBackgroundMusic() {
         try {
             // 获取音频文件的路径
-            String musicPath = "2048BackGroundMusic.wav";
+            String musicPath = "D:\\Program Files\\CS109_Final_Project_2048Game\\2048BackGroundMusic.wav";
 
             // 创建一个 File 对象，指向音频文件
             File audioFile = new File(musicPath);
@@ -28,11 +28,98 @@ public class BGM {
             ex.printStackTrace();
         }
     }
+    public static void SlideSoundEffect() {
+        try {
+            // 获取音频文件的路径
+            String musicPath = "2048SlideSoundEffect.wav";
+
+            // 创建一个 File 对象，指向音频文件
+            File audioFile = new File(musicPath);
+
+            // 创建一个 AudioInputStream 对象
+            AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(audioFile);
+
+            // 获取音频剪辑并打开它
+            Clip clip = AudioSystem.getClip();
+            clip.open(audioInputStream);
+
+            // 开始播放音频剪辑
+            clip.start();
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    public static void VictorySoundEffect() {
+        try {
+            // 获取音频文件的路径
+            String musicPath = "D:\\Program Files\\CS109_Final_Project_2048Game\\2048VictorySoundEffect.wav";
+
+            // 创建一个 File 对象，指向音频文件
+            File audioFile = new File(musicPath);
+
+            // 创建一个 AudioInputStream 对象
+            AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(audioFile);
+
+            // 获取音频剪辑并打开它
+            Clip clip = AudioSystem.getClip();
+            clip.open(audioInputStream);
+
+            // 开始播放音频剪辑
+            clip.start();
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    public static void BubbleSoundEffect() {
+        try {
+            // 获取音频文件的路径
+            String musicPath = "D:\\Program Files\\CS109_Final_Project_2048Game\\2048BubbleSoundEffect.wav";
+
+            // 创建一个 File 对象，指向音频文件
+            File audioFile = new File(musicPath);
+
+            // 创建一个 AudioInputStream 对象
+            AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(audioFile);
+
+            // 获取音频剪辑并打开它
+            Clip clip = AudioSystem.getClip();
+            clip.open(audioInputStream);
+
+            // 开始播放音频剪辑
+            clip.start();
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    public static void GameOverSoundEffect() {
+        try {
+            // 获取音频文件的路径
+            String musicPath = "D:\\Program Files\\CS109_Final_Project_2048Game\\2048GameOverSoundEffect.wav";
+
+            // 创建一个 File 对象，指向音频文件
+            File audioFile = new File(musicPath);
+
+            // 创建一个 AudioInputStream 对象
+            AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(audioFile);
+
+            // 获取音频剪辑并打开它
+            Clip clip = AudioSystem.getClip();
+            clip.open(audioInputStream);
+
+            // 开始播放音频剪辑
+            clip.start();
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
 
     public static void main(String[] args) {
-        // 启动后台线程播放背景音乐
-        new Thread(BGM::playBackgroundMusic).start();
-
-        // 游戏逻辑...
     }
 }
