@@ -1,7 +1,7 @@
 package view;
 
 import model.GridNumber;
-
+import java.util.Random;
 import javax.swing.*;
 import java.awt.*;
 
@@ -143,10 +143,24 @@ public class GamePanel extends ListenerPanel {
         this.stepLabel.setText(String.format("Step: %d", this.steps));
         this.scoreLabel.setText(String.format("Score: %d", model.getScore()));
     }
-//    public void doremoveGrid(int i,int j){
-//        grids[i][j].setNumber(0);
-//        this.model.removeGrid(i,j);
-//    }
+    public void doremoveGrid(){
+        for (int i = 0; i < grids.length; i++) {
+            for (int j = 0; j <grids[0].length ; j++) {
+                this.model.removeGrid(i,j);
+            }
+        }
+        if(checkfull()==false){
+            Random random=new Random();
+            int i=random.nextInt(model.getNumbers().length);
+            int j=random.nextInt(model.getNumbers()[0].length);
+            if(model.getNumbers()[i][j]!=0){
+                model.createNumber(model.getNumbers());
+            }else{
+                int randomNumber=(random.nextInt(2)==0)?2:4;
+                this.model.getNumbers()[i][j]=randomNumber;}
+        }
+        this.updateGridsNumber();
+    }
 
     public void setScoreLabel(JLabel scoreLabel){
         this.scoreLabel=scoreLabel;
