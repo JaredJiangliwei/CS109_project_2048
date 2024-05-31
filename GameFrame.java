@@ -54,11 +54,11 @@ public class GameFrame extends JFrame {
 
 
         //加小道具
-//        this.propsBtn = createButton("P", new Point(630, 10), 50, 50);
-//        this.propsBtn.addActionListener(e -> {
-//            //GamePanel.doremoveGrid();
-//            gamePanel.requestFocusInWindow();//enable key listener
-//        });
+        this.propsBtn = createButton("P", new Point(620, 450), 50, 50);
+        this.propsBtn.addActionListener(e -> {
+            gamePanel.doremoveGrid();
+            gamePanel.requestFocusInWindow();//enable key listener
+        });
         //游戏界面里 重来 load 上下左右 的按钮
         this.restartBtn.addActionListener(e -> {
             controller.restartGame();
