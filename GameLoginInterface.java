@@ -32,6 +32,7 @@ public class GameLoginInterface {
     private Map<String, String> users = new HashMap<>();//键值对，第一个string是用户名，第二个string是密码
     private String userFile = "users.txt";
     private String username;
+    private CountdownTimer timer;
 
     public GameLoginInterface() {//constructor
         loadUsers();
@@ -264,58 +265,117 @@ public class GameLoginInterface {
 //        buttonPanel.setBackground(new Color(255, 255, 128));
 
         // 创建两个按钮并添加到竖直面板中
-        JButton button1 = new JButton("经典模式");
-        JButton button2 = new JButton("5*5模式");
+        JButton button1 = new JButton("计时模式");
+        JButton button2 = new JButton("自定义模式");
+        JButton button3 = new JButton("经典模式");
         button1.setSize(500,300);
         buttonPanel.add(button1);
         buttonPanel.add(button2);
+        buttonPanel.add(button3);
 
         // 添加竖直面板到主面板的CENTER位置（或根据需要选择其他位置）
         mainPanel.add(buttonPanel, BorderLayout.SOUTH);
         modeFrame.getContentPane().add(mainPanel);
         modeFrame.setVisible(true);
 
-//        // 将主面板添加到JFrame的内容窗格
-//        modeFrame.getContentPane().add(mainPanel);
 
+        button1.addActionListener(e -> {//timing mode
 
+//            GameFrame gameFrame = new GameFrame(670, 530, username, 4);
 
+//            gameFrame.setVisible(true);
+            TimeGameframe timeGameframe=new TimeGameframe(670, 530, username, 4);
+            timeGameframe.setVisible(true);
+            mainFrame.setVisible(false);
+            modeFrame.setVisible(false);
 
+            timer = new CountdownTimer(3);
 
+            ActionListener taskPerformer = new ActionListener() {
+                public void actionPerformed(ActionEvent evt) {
+                    timer.decrementSeconds();
+                    timeGameframe.setTimeLabel(timer.getSeconds());
+                    if (timer.isFinished()) {
+                        JOptionPane.showMessageDialog(null, "Time's up!", "Countdown Finished", JOptionPane.INFORMATION_MESSAGE);
+                        timeGameframe.setVisible(false);
+                        mainFrame.setVisible(true);
+                        ((Timer) evt.getSource()).stop();
+                    }
+                }
+            };
 
+            Timer timer1 = new Timer(1000, taskPerformer);
+            timer1.start();
 
+            timeGameframe.setTimer1(timer1);
+        });
+        button2.addActionListener(e -> {
+            JFrame diyFrame = new JFrame("自定义模式");
+            diyFrame.setSize(500, 200);
+            diyFrame.setLayout(new GridLayout(2, 2));
+            diyFrame.setLocationRelativeTo(null);
+            diyFrame.setVisible(true);
 
+            JTextField diyField = new JTextField();
+            JButton loginButton = new JButton("确定");
+            JButton loginBackButton = new JButton("返回");
+            loginButton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    String diy = diyField.getText();
+                    boolean isValid = false;
 
+                    while (!isValid) {
+                        try {
+                            // 尝试将输入转换为整数
+                            int number = Integer.parseInt(diy.trim());
 
-//        JPanel panel = new JPanel();
-//        buttonPanel.setBackground(new Color(255, 255, 128));
-//        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS)); // Y_AXIS 表示垂直布局
-//
-//        JButton classic = new JButton("经典模式");
-//        JButton button3 = new JButton("5*5模式");
-//
-//        classic.setPreferredSize(new Dimension(100, 60));
-//
-//        panel.add(classic);
-////        panel.add(button2);
-//        panel.add(button3);
-//        modeFrame.add(panel, BorderLayout.CENTER);
-//        modeFrame.setVisible(true);
+                            // 检查整数是否大于0
+                            if (number>13) {
+                                JOptionPane.showMessageDialog(null, "输入数字过大，请重新输入。", "错误", JOptionPane.ERROR_MESSAGE);
+                            } else if (number > 0) {
+                                isValid = true; // 输入是正整数
+                                diyFrame.setVisible(false);
+                                GameFrame gameFrame = new GameFrame(670, 530, username, number);
+                                gameFrame.setVisible(true);
+                                mainFrame.setVisible(false);
+                                modeFrame.setVisible(false);
+                            }else {
+                                JOptionPane.showMessageDialog(null, "输入的不是正整数，请重新输入。", "错误", JOptionPane.ERROR_MESSAGE);
+                                // 清空文本字段以便用户重新输入
+                                diyField.setText("");
+                                // 获取新的输入（在实际应用中，这一步可能通过再次显示对话框或等待用户输入来实现）
+                                // 由于这里是示例，我们假设用户下一次点击按钮时会输入新的值
+                                return; // 等待用户再次点击按钮
+                            }
+                        } catch (NumberFormatException ex) {
+                            // 输入的不是整数，提示用户重新输入
+                            JOptionPane.showMessageDialog(null, "输入的不是正整数，请重新输入。", "错误", JOptionPane.ERROR_MESSAGE);
+                            // 清空文本字段以便用户重新输入
+                            diyField.setText("");
+                            // 获取新的输入（同上）
+                            return; // 等待用户再次点击按钮
+                        }
+                    }
+                };
+            });
+            loginBackButton.addActionListener(a -> {
+                diyFrame.setVisible(false);
+                modeFrame.setVisible(true);
+            });
 
-        button1.addActionListener(e -> {
+            diyFrame.add(new JLabel("请输入一个正整数:"));
+            diyFrame.add(diyField);
+            diyFrame.add(loginButton);
+            diyFrame.add(loginBackButton);
+
+        });
+        button3.addActionListener(e -> {
 
             GameFrame gameFrame = new GameFrame(670, 530, username, 4);
 
             gameFrame.setVisible(true);
-            mainFrame.setVisible(false);
-            modeFrame.setVisible(false);
-        });
-        button2.addActionListener(e -> {
-            GameFrame gameFrame = new GameFrame(670, 530, username, 5);
-            gameFrame.setVisible(true);
-            mainFrame.setVisible(false);
-            modeFrame.setVisible(false);
-        });
 
+        });
     }
 }
