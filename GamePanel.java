@@ -1,7 +1,4 @@
-package view;
 
-import model.GridNumber;
-import util.BGM;
 
 import java.util.Random;
 import javax.swing.*;
@@ -51,6 +48,10 @@ public class GamePanel extends ListenerPanel {
 
     private Timer time1;
 
+    private boolean has1024MadeBefore;
+
+    private boolean has2048MadeBefore;
+
     public GamePanel(int size,int count) {
         this.setVisible(true);
         this.setFocusable(true);
@@ -89,19 +90,31 @@ public class GamePanel extends ListenerPanel {
         }
         repaint();
         if(checkfull()){
-            time1.stop();
-            new Thread(BGM::GameOverSoundEffect).start();
+            try{time1.stop();}catch (NullPointerException e){
+
+            }
+            new Thread(SoundEffectPlayer::GameOverSoundEffect).start();
             JOptionPane.showMessageDialog(null, "Game Over！");
             System.out.println("game over");
         }
 
-        for (int i = 0; i < grids.length; i++) {
-            for (int j = 0; j < grids[i].length; j++) {
-                if(model.getNumber(i,j)==1024){
-                    JOptionPane.showMessageDialog(null, "恭喜合成1024");
-                } else if (model.getNumber(i,j)==2048) {
-                    new Thread(BGM::VictorySoundEffect).start();
-                    JOptionPane.showMessageDialog(null, "恭喜合成2048");
+        if(!has1024MadeBefore){
+            for (int i = 0; i < grids.length; i++) {
+                for (int j = 0; j < grids[i].length; j++) {
+                    if(model.getNumber(i,j)==1024&&has1024MadeBefore==false){
+                        JOptionPane.showMessageDialog(null, "恭喜合成1024");
+                        has1024MadeBefore = true;
+                    }
+                }
+            }
+        } else if (!has2048MadeBefore) {
+            for (int i = 0; i < grids.length; i++) {
+                for (int j = 0; j < grids[i].length; j++) {
+                    if (model.getNumber(i,j)==2048&&has2048MadeBefore==false) {
+                        new Thread(SoundEffectPlayer::VictorySoundEffect).start();
+                        JOptionPane.showMessageDialog(null, "恭喜合成2048");
+                        has2048MadeBefore = true;
+                    }
                 }
             }
         }
