@@ -1,11 +1,15 @@
 package view;
 
 import controller.GameController;
+import model.AiJudge;
 import util.ColorMap;
 import util.SoundEffectPlayer;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.Arrays;
 
 public class GameFrame extends JFrame {
     public String getUsername() {
@@ -56,7 +60,79 @@ public class GameFrame extends JFrame {
         //加小道具
         this.propsBtn = createButton("P", new Point(620, 450), 50, 50);
         this.propsBtn.addActionListener(e -> {
-            gamePanel.doremoveGrid();
+
+            int delay = 1000; // 毫秒
+            ActionListener taskPerformer = new ActionListener() {
+                public void actionPerformed(ActionEvent evt) {
+                    AiJudge ai=new AiJudge();
+                    ai.setNumbers(gamePanel.getModel().getNumbers());
+                    ai.moveRight();
+                    ai.setNumbers(gamePanel.getModel().getNumbers());
+                    ai.moveDown();
+                    ai.setNumbers(gamePanel.getModel().getNumbers());
+                    ai.moveLeft();
+                    ai.setNumbers(gamePanel.getModel().getNumbers());
+                    ai.moveLeft();
+                    ai.setNumbers(gamePanel.getModel().getNumbers());
+                    ai.setMax();
+                    for (int[] line : ai.getNumbers()) {
+                        System.out.println(Arrays.toString(line));
+                    }
+                    System.out.println(ai.getMax());
+                    System.out.println(ai.getScorechangeright());
+                    System.out.println(ai.getScorechangeleft());
+                    System.out.println(ai.getScorechangeup());
+                    if(ai.getMax()==0){
+                        if(ai.isMovedup()){
+                            gamePanel.doMoveUp();
+                            System.out.println("0u");
+                        }
+                        else if(ai.isMovedleft()){
+                            gamePanel.doMoveLeft();
+                            System.out.println("0l");
+                        }
+                        else if(ai.isMoveddown()){
+                            gamePanel.doMoveDown();
+                            System.out.println("0d");
+                        }
+                        else{
+                            gamePanel.doMoveRight();
+                            System.out.println("0r");
+                        }
+                    }
+                    else if(ai.getMax()==ai.getScorechangedown()&&ai.isMoveddown()){
+                        System.out.println(ai.getScorechangedown());
+                        System.out.println(ai.getMax());
+                        System.out.println("down");
+                        gamePanel.doMoveDown();
+                    } else if (ai.getMax()==ai.getScorechangeright()&&ai.isMovedright()) {
+                            System.out.println(ai.getMax());
+                            System.out.println("Right");
+                            gamePanel.doMoveRight();
+                    } else if (ai.getMax()==ai.getScorechangeup()&&ai.isMovedup()) {
+                        System.out.println(ai.getMax());
+                        System.out.println("up");
+                        gamePanel.doMoveUp();
+                    } else if(ai.getMax()==ai.getScorechangeleft()&&ai.isMovedleft()){
+                            System.out.println(ai.getMax());
+                            System.out.println("Left");
+                            gamePanel.doMoveLeft();
+                    }
+
+                        // 如果需要继续循环，则不需要做任何事情，因为Timer会继续触发事件
+                    if (gamePanel.checkfull()) { // 假设我们想要循环10次后停止
+                        System.out.println("stop");
+                        ((javax.swing.Timer) evt.getSource()).stop(); // 停止Timer
+                    }
+
+                }
+            };
+
+                // 创建一个javax.swing.Timer实例，并启动它
+            javax.swing.Timer timer = new javax.swing.Timer(delay, taskPerformer);
+            timer.start();
+
+//            gamePanel.doremoveGrid();
             gamePanel.requestFocusInWindow();//enable key listener
         });
         //游戏界面里 重来 load 上下左右 的按钮
