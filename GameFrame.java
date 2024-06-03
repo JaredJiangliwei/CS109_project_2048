@@ -1,9 +1,3 @@
-package view;
-
-import controller.GameController;
-import model.AiJudge;
-import util.ColorMap;
-import util.SoundEffectPlayer;
 
 import javax.swing.*;
 import java.awt.*;
@@ -35,6 +29,10 @@ public class GameFrame extends JFrame {
     private JButton rightBtn;
     private JButton propsBtn;
 
+    private boolean isAIOn=false;
+
+    private Timer AiTimer;
+
 
     public GameFrame(int width, int height,String username,  int c) {
         this.setTitle("2024 CS109 Project Demo");
@@ -60,10 +58,18 @@ public class GameFrame extends JFrame {
         //加小道具
         this.propsBtn = createButton("P", new Point(620, 450), 50, 50);
         this.propsBtn.addActionListener(e -> {
-
-            int delay = 1000; // 毫秒
+            if(isAIOn==false){
+                isAIOn=true;
+            }
+            else if(isAIOn==true){
+                isAIOn=false;
+            }
+            int delay = 100; // 毫秒
             ActionListener taskPerformer = new ActionListener() {
                 public void actionPerformed(ActionEvent evt) {
+                    if(isAIOn==false){
+                        ((javax.swing.Timer) evt.getSource()).stop(); // 停止Timer
+                    }
                     AiJudge ai=new AiJudge();
                     ai.setNumbers(gamePanel.getModel().getNumbers());
                     ai.moveRight();
@@ -127,16 +133,22 @@ public class GameFrame extends JFrame {
 
                 }
             };
-
-                // 创建一个javax.swing.Timer实例，并启动它
+            // 创建一个javax.swing.Timer实例，并启动它
             javax.swing.Timer timer = new javax.swing.Timer(delay, taskPerformer);
+            AiTimer=timer;
             timer.start();
+
 
 //            gamePanel.doremoveGrid();
             gamePanel.requestFocusInWindow();//enable key listener
         });
         //游戏界面里 重来 load 上下左右 的按钮
         this.restartBtn.addActionListener(e -> {
+            try{
+                AiTimer.stop();
+            }catch (NullPointerException event){
+                
+            }
             controller.restartGame();
             this.setVisible(false);
             gamePanel.requestFocusInWindow();//enable key listener
