@@ -1,6 +1,6 @@
-package project;
+package view;
 
-
+import util.ColorMap;
 
 import javax.swing.*;
 import java.awt.*;
@@ -29,17 +29,17 @@ public class GridComponent extends JComponent {
     public void paintComponent(Graphics g) {
         super.printComponents(g);
         if (number > 0) {
-            g.setColor(Color.white);
-            g.fillRect(1, 1, getWidth() - 2, getHeight() - 2);
             g.setColor(ColorMap.getColor(number));
-            g.setFont(font);
+            g.fillRect(1, 1, getWidth() - 1, getHeight() - 1);
+            g.setColor(Color.black);
+            g.setFont(new Font("思源宋体",Font.BOLD,40));
             FontMetrics metrics = g.getFontMetrics(g.getFont());
             int textWidth = metrics.stringWidth(String.valueOf(number));
             int x = (getWidth() - textWidth) / 2;
             int y = (getHeight() - metrics.getHeight()) / 2 + metrics.getAscent();
             g.drawString(String.valueOf(number), x, y);
         } else {
-            g.setColor(Color.LIGHT_GRAY);
+            g.setColor(new Color(204,192,178));
             g.fillRect(1, 1, getWidth() - 2, getHeight() - 2);
         }
     }

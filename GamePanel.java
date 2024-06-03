@@ -1,6 +1,8 @@
 package view;
 
 import model.GridNumber;
+import util.BGM;
+
 import java.util.Random;
 import javax.swing.*;
 import java.awt.*;
@@ -81,6 +83,7 @@ public class GamePanel extends ListenerPanel {
         }
         repaint();
         if(checkfull()){
+            new Thread(BGM::GameOverSoundEffect).start();
             JOptionPane.showMessageDialog(null, "Game Over！");
             System.out.println("game over");
         }
@@ -89,7 +92,8 @@ public class GamePanel extends ListenerPanel {
             for (int j = 0; j < grids[i].length; j++) {
                 if(model.getNumber(i,j)==1024){
                     JOptionPane.showMessageDialog(null, "恭喜合成1024");
-                } else if (model.getNumber(i,j)==1024) {
+                } else if (model.getNumber(i,j)==2048) {
+                    new Thread(BGM::VictorySoundEffect).start();
                     JOptionPane.showMessageDialog(null, "恭喜合成2048");
                 }
             }
@@ -97,10 +101,7 @@ public class GamePanel extends ListenerPanel {
 
     }
 
-    /**
-     * Implement the abstract method declared in ListenerPanel.
-     * Do move right.
-     */
+
     @Override
     public void doMoveRight() {
         if(model.isMovedright()){

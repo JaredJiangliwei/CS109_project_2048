@@ -109,6 +109,7 @@ public class GridNumber {
         this.X_COUNT = xCount;
         this.Y_COUNT = yCount;
         this.numbers = new int[this.X_COUNT][this.Y_COUNT];
+        this.score=0;
         this.initialNumbers();
     }
     public void initialNumbers() {
@@ -240,9 +241,11 @@ public class GridNumber {
 
     }
 
-//    public void removeGrid(int i, int j){
-//        numbers[i][j]=0;
-//    }
+    public void removeGrid(int i, int j){
+        if(numbers[i][j]<=4){
+            numbers[i][j]=0;
+        }
+    }
 
     public boolean checkfull(){
         boolean a=true;

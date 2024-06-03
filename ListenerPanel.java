@@ -1,6 +1,6 @@
 package view;
 
-import util.SoundEffectPlayer;
+import util.BGM;
 
 import javax.swing.*;
 import java.awt.*;
@@ -24,19 +24,19 @@ public abstract class ListenerPanel extends JPanel {
             switch (e.getKeyCode()) {
                 case KeyEvent.VK_RIGHT :
                     doMoveRight();
-                    new Thread(SoundEffectPlayer::SlideSoundEffect).start();
+                    new Thread(BGM::SlideSoundEffect).start();
                     break;
                 case KeyEvent.VK_LEFT :
                     doMoveLeft();
-                    new Thread(SoundEffectPlayer::SlideSoundEffect).start();
+                    new Thread(BGM::SlideSoundEffect).start();
                     break;
                 case KeyEvent.VK_UP :
                     doMoveUp();
-                    new Thread(SoundEffectPlayer::SlideSoundEffect).start();
+                    new Thread(BGM::SlideSoundEffect).start();
                     break;
                 case KeyEvent.VK_DOWN :
                     doMoveDown();
-                    new Thread(SoundEffectPlayer::SlideSoundEffect).start();
+                    new Thread(BGM::SlideSoundEffect).start();
                     break;
                 //todo: complete other move event
             }

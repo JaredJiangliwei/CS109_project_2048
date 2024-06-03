@@ -1,6 +1,9 @@
-package project;
+package controller;
 
-
+import model.GridNumber;
+import view.GameFrame;
+import view.GameLoginInterface;
+import view.GamePanel;
 
 import javax.swing.*;
 import java.io.*;
@@ -23,7 +26,6 @@ public class GameController {
     public void restartGame() {
         GameLoginInterface frame=new GameLoginInterface();
         frame.display();
-
     }
 
     public void saveGame(){
@@ -184,5 +186,4 @@ public class GameController {
         GameController test = new GameController(null,null,"1231");
         test.saveGame();
     }
-
 }
