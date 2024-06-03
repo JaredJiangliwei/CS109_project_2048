@@ -289,7 +289,7 @@ public class GameLoginInterface {
             mainFrame.setVisible(false);
             modeFrame.setVisible(false);
 
-            timer = new CountdownTimer(3);
+            timer = new CountdownTimer(30);
 
             ActionListener taskPerformer = new ActionListener() {
                 public void actionPerformed(ActionEvent evt) {
@@ -308,6 +308,8 @@ public class GameLoginInterface {
             timer1.start();
 
             timeGameframe.setTimer1(timer1);
+            timeGameframe.getGamePanel().setTime2(timer1);
+
         });
         button2.addActionListener(e -> {
             JFrame diyFrame = new JFrame("自定义模式");

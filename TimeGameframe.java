@@ -26,6 +26,15 @@ public class TimeGameframe extends JFrame {
     private JLabel stepLabel;
     private JLabel scoreLabel;
     private JLabel timeLabel;
+
+    public GamePanel getGamePanel() {
+        return gamePanel;
+    }
+
+    public void setGamePanel(GamePanel gamePanel) {
+        this.gamePanel = gamePanel;
+    }
+
     private GamePanel gamePanel;
     private JButton upBtn;
     private JButton leftBtn;
@@ -64,52 +73,6 @@ public class TimeGameframe extends JFrame {
         this.scoreLabel=createLabel("",new Font("serif", Font.ITALIC, 22), new Point(480, 100), 180, 50);
         gamePanel.setScoreLabel(scoreLabel);
         this.timeLabel=createLabel("",new Font("serif", Font.ITALIC, 22), new Point(480, 25), 180, 50);
-//        CountdownTimer time=new CountdownTimer(200);
-//        this.timeLabel.setText(String.format("Time: %d",seconds));
-//        timer = new CountdownTimer(3);
-//
-//        ActionListener taskPerformer = new ActionListener() {
-//            public void actionPerformed(ActionEvent evt) {
-//                timer.decrementSeconds();
-//                timeLabel.setText("Remaining: " + timer.getSeconds() + "s");
-//                if (timer.isFinished()) {
-//                    JOptionPane.showMessageDialog(null, "Time's up!", "Countdown Finished", JOptionPane.INFORMATION_MESSAGE);
-//                    controller.restartGame();
-//                    gamePanel.setVisible(false);
-//                    ((Timer) evt.getSource()).stop();
-//                }
-//            }
-//        };
-//
-//        new Timer(1000, taskPerformer).start();
-//
-
-
-
-
-//        javax.swing.Timer swingTimer = new javax.swing.Timer(1000, new ActionListener() {
-//            @Override
-//            public void actionPerformed(ActionEvent e) {
-//                timer.decrementSeconds(); // 减少秒数
-//                timeLabel.setText("Remaining: " + timer.getSeconds() + "s"); // 更新标签文本
-//                if (timer.isFinished()) {
-//                    // 如果倒计时结束
-//                    JOptionPane.showMessageDialog(null, "Time's up!" +
-//                            "Your score is");
-//                    controller.restartGame();
-//                    gamePanel.setVisible(false);
-//                    swingTimer.stop(); // 停止Timer
-//                    timeLabel.setText("Time's up!"); // 显示结束信息
-//                }
-
-//
-//            }
-//        });
-
-        // 启动Timer
-//        swingTimer.start();
-
-
 
     //加小道具
         this.propsBtn = createButton("P", new Point(620, 450), 50, 50);

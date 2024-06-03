@@ -45,6 +45,12 @@ public class GamePanel extends ListenerPanel {
     private int steps;
     private final int GRID_SIZE;
 
+    public void setTime2(Timer time1) {
+        this.time1 = time1;
+    }
+
+    private Timer time1;
+
     public GamePanel(int size,int count) {
         this.setVisible(true);
         this.setFocusable(true);
@@ -83,6 +89,7 @@ public class GamePanel extends ListenerPanel {
         }
         repaint();
         if(checkfull()){
+            time1.stop();
             new Thread(BGM::GameOverSoundEffect).start();
             JOptionPane.showMessageDialog(null, "Game Over！");
             System.out.println("game over");
