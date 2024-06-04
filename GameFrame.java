@@ -1,3 +1,9 @@
+package view;
+
+import controller.GameController;
+import model.AiJudge;
+import util.ColorMap;
+import util.SoundEffectPlayer;
 
 import javax.swing.*;
 import java.awt.*;
@@ -64,71 +70,61 @@ public class GameFrame extends JFrame {
             else if(isAIOn==true){
                 isAIOn=false;
             }
-            int delay = 100; // 毫秒
+            int delay = 800; // 毫秒
             ActionListener taskPerformer = new ActionListener() {
                 public void actionPerformed(ActionEvent evt) {
                     if(isAIOn==false){
                         ((javax.swing.Timer) evt.getSource()).stop(); // 停止Timer
-                    }
-                    AiJudge ai=new AiJudge();
-                    ai.setNumbers(gamePanel.getModel().getNumbers());
-                    ai.moveRight();
-                    ai.setNumbers(gamePanel.getModel().getNumbers());
-                    ai.moveDown();
-                    ai.setNumbers(gamePanel.getModel().getNumbers());
-                    ai.moveLeft();
-                    ai.setNumbers(gamePanel.getModel().getNumbers());
-                    ai.moveLeft();
-                    ai.setNumbers(gamePanel.getModel().getNumbers());
-                    ai.setMax();
-                    for (int[] line : ai.getNumbers()) {
-                        System.out.println(Arrays.toString(line));
-                    }
-                    System.out.println(ai.getMax());
-                    System.out.println(ai.getScorechangeright());
-                    System.out.println(ai.getScorechangeleft());
-                    System.out.println(ai.getScorechangeup());
-                    if(ai.getMax()==0){
-                        if(ai.isMovedup()){
-                            gamePanel.doMoveUp();
-                            System.out.println("0u");
+                    }else {
+                        AiJudge ai = new AiJudge(gamePanel.getModel().getX_COUNT(),gamePanel.getModel().getY_COUNT());
+                        ai.setNumbers(gamePanel.getModel().getNumbers());
+                        ai.moveRight();
+                        ai.setNumbers(gamePanel.getModel().getNumbers());
+                        ai.moveDown();
+                        ai.setNumbers(gamePanel.getModel().getNumbers());
+                        ai.moveLeft();
+                        ai.setNumbers(gamePanel.getModel().getNumbers());
+                        ai.moveLeft();
+                        ai.setNumbers(gamePanel.getModel().getNumbers());
+                        ai.setMax();
+                        for (int[] line : ai.getNumbers()) {
+                            System.out.println(Arrays.toString(line));
                         }
-                        else if(ai.isMovedleft()){
-                            gamePanel.doMoveLeft();
-                            System.out.println("0l");
-                        }
-                        else if(ai.isMoveddown()){
-                            gamePanel.doMoveDown();
-                            System.out.println("0d");
-                        }
-                        else{
-                            gamePanel.doMoveRight();
-                            System.out.println("0r");
-                        }
-                    }
-                    else if(ai.getMax()==ai.getScorechangedown()&&ai.isMoveddown()){
-                        System.out.println(ai.getScorechangedown());
                         System.out.println(ai.getMax());
-                        System.out.println("down");
-                        gamePanel.doMoveDown();
-                    } else if (ai.getMax()==ai.getScorechangeright()&&ai.isMovedright()) {
+                        System.out.println(ai.getScorechangeright());
+                        System.out.println(ai.getScorechangeleft());
+                        System.out.println(ai.getScorechangeup());
+                        if (ai.getMax() == 0) {
+                            if (ai.isMoveddown()) {
+                                gamePanel.doMoveDown();
+                            } else if (ai.isMovedleft()) {
+                                gamePanel.doMoveLeft();
+                                System.out.println("0l");
+                            } else if (ai.isMovedright()) {
+                                gamePanel.doMoveRight();
+                            } else {
+                                gamePanel.doMoveUp();
+                            }
+                        } else if (ai.getMax() == ai.getScorechangedown() && ai.isMoveddown()) {
+                            System.out.println(ai.getScorechangedown());
+                            System.out.println(ai.getMax());
+                            System.out.println("down");
+                            gamePanel.doMoveDown();
+                        } else if (ai.getMax() == ai.getScorechangeright() && ai.isMovedright()) {
                             System.out.println(ai.getMax());
                             System.out.println("Right");
                             gamePanel.doMoveRight();
-                    } else if (ai.getMax()==ai.getScorechangeup()&&ai.isMovedup()) {
-                        System.out.println(ai.getMax());
-                        System.out.println("up");
-                        gamePanel.doMoveUp();
-                    } else if(ai.getMax()==ai.getScorechangeleft()&&ai.isMovedleft()){
-                            System.out.println(ai.getMax());
-                            System.out.println("Left");
+                        } else if (ai.getMax() == ai.getScorechangeleft() && ai.isMovedleft()) {
                             gamePanel.doMoveLeft();
-                    }
+                        } else if (ai.getMax() == ai.getScorechangeup() && ai.isMovedup()) {
+                            gamePanel.doMoveUp();
+                        }
 
                         // 如果需要继续循环，则不需要做任何事情，因为Timer会继续触发事件
-                    if (gamePanel.checkfull()) { // 假设我们想要循环10次后停止
-                        System.out.println("stop");
-                        ((javax.swing.Timer) evt.getSource()).stop(); // 停止Timer
+                        if (gamePanel.checkfull()) { // 假设我们想要循环10次后停止
+                            System.out.println("stop");
+                            ((javax.swing.Timer) evt.getSource()).stop(); // 停止Timer
+                        }
                     }
 
                 }
@@ -147,7 +143,7 @@ public class GameFrame extends JFrame {
             try{
                 AiTimer.stop();
             }catch (NullPointerException event){
-                
+
             }
             controller.restartGame();
             this.setVisible(false);
@@ -214,6 +210,4 @@ public class GameFrame extends JFrame {
         this.add(label);
         return label;
     }
-
-
 }

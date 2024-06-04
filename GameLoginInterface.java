@@ -33,6 +33,7 @@ public class GameLoginInterface {
     private String userFile = "users.txt";
     private String username;
     private CountdownTimer timer;
+    private boolean isDead;
 
     public GameLoginInterface() {//constructor
         loadUsers();
@@ -289,7 +290,7 @@ public class GameLoginInterface {
             mainFrame.setVisible(false);
             modeFrame.setVisible(false);
 
-            timer = new CountdownTimer(30);
+            timer = new CountdownTimer(100);
 
             ActionListener taskPerformer = new ActionListener() {
                 public void actionPerformed(ActionEvent evt) {
@@ -335,7 +336,7 @@ public class GameLoginInterface {
                             // 检查整数是否大于0
                             if (number>13) {
                                 JOptionPane.showMessageDialog(null, "输入数字过大，请重新输入。", "错误", JOptionPane.ERROR_MESSAGE);
-                            } else if (number > 0) {
+                            } else if (number > 1) {
                                 isValid = true; // 输入是正整数
                                 diyFrame.setVisible(false);
                                 GameFrame gameFrame = new GameFrame(670, 530, username, number);

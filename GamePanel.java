@@ -1,8 +1,15 @@
+package view;
 
+import model.GridNumber;
+import util.BGM;
 
+import java.io.IOException;
 import java.util.Random;
 import javax.swing.*;
 import java.awt.*;
+
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 
 public class GamePanel extends ListenerPanel {
@@ -51,8 +58,17 @@ public class GamePanel extends ListenerPanel {
     private boolean has1024MadeBefore;
 
     private boolean has2048MadeBefore;
+    private boolean dead;
 
-    public GamePanel(int size,int count) {
+    public boolean isDead() {
+        return dead;
+    }
+
+    public void setDead(boolean dead) {
+        this.dead = dead;
+    }
+
+    public GamePanel(int size, int count) {
         this.setVisible(true);
         this.setFocusable(true);
         this.setLayout(null);
@@ -61,8 +77,8 @@ public class GamePanel extends ListenerPanel {
         this.GRID_SIZE = size / count;
         this.grids = new GridComponent[count][count];
         this.model = new GridNumber(count, count);
+        dead=true;
         initialGame();
-
     }
 
     public GridNumber getModel() {
@@ -90,11 +106,15 @@ public class GamePanel extends ListenerPanel {
         }
         repaint();
         if(checkfull()){
-            try{time1.stop();}catch (NullPointerException e){
+            try{
+                time1.stop();
+
+            }catch (NullPointerException e){
 
             }
-            new Thread(SoundEffectPlayer::GameOverSoundEffect).start();
+            new Thread(BGM::GameOverSoundEffect).start();
             JOptionPane.showMessageDialog(null, "Game Over！");
+            dead=false;
             System.out.println("game over");
         }
 
@@ -111,7 +131,7 @@ public class GamePanel extends ListenerPanel {
             for (int i = 0; i < grids.length; i++) {
                 for (int j = 0; j < grids[i].length; j++) {
                     if (model.getNumber(i,j)==2048&&has2048MadeBefore==false) {
-                        new Thread(SoundEffectPlayer::VictorySoundEffect).start();
+                        new Thread(BGM::VictorySoundEffect).start();
                         JOptionPane.showMessageDialog(null, "恭喜合成2048");
                         has2048MadeBefore = true;
                     }
@@ -164,12 +184,13 @@ public class GamePanel extends ListenerPanel {
         this.stepLabel.setText(String.format("Step: %d", this.steps));
         this.scoreLabel.setText(String.format("Score: %d", model.getScore()));
     }
-    public void doremoveGrid(){
-        for (int i = 0; i < grids.length; i++) {
-            for (int j = 0; j <grids[0].length ; j++) {
-                this.model.removeGrid(i,j);
-            }
-        }
+    public void doremoveGrid(int x, int y){
+        this.model.removeGrid(x,y);
+//        for (int i = 0; i < grids.length; i++) {
+//            for (int j = 0; j <grids[0].length ; j++) {
+//                this.model.removeGrid(i,j);
+//            }
+//        }
         if(checkfull()==false){
             Random random=new Random();
             int i=random.nextInt(model.getNumbers().length);
@@ -218,6 +239,4 @@ public class GamePanel extends ListenerPanel {
         }
         return a;
     }
-
-
 }

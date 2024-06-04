@@ -32,6 +32,10 @@ public class GridNumber {
     private boolean movedleft;
     private boolean movedup;
     private boolean moveddown;
+    private int scorechangeright;
+    private int scorechangeleft;
+    private int scorechangeup;
+    private int scorechangedown;
 
     public boolean isMovedright() {
         movedright=false;
@@ -122,6 +126,7 @@ public class GridNumber {
             for (int i =0; i < numbers.length; i++) {
                 for(int j=numbers[i].length-2;j>=0;j--){
                     if(numbers[i][j]!=0){
+                        scorechangeright=0;
                         moveRight1(numbers,i,j);
                     }
                 }
@@ -138,6 +143,7 @@ public class GridNumber {
             numbers[i][j+1]=numbers[i][j+1]+numbers[i][j];
             numbers[i][j]=0;
             score+=numbers[i][j+1];
+            scorechangeright+=numbers[i][j+1];
             moveRight1(numbers,i,j+1);
         }else if(numbers[i][j+1]==0){
             numbers[i][j+1]=numbers[i][j];
@@ -150,6 +156,7 @@ public class GridNumber {
             for (int i =0; i < numbers.length; i++) {
                 for(int j=0;j<numbers[i].length;j++){
                     if(numbers[i][j]!=0){
+                        scorechangeleft=0;
                         moveLeft1(numbers,i,j);
                     }
                 }
@@ -165,6 +172,7 @@ public class GridNumber {
             numbers[i][j-1]=numbers[i][j-1]+numbers[i][j];
             numbers[i][j]=0;
             score+=numbers[i][j-1];
+            scorechangeleft+=numbers[i][j-1];
             moveLeft1(numbers,i,j-1);
         }else if(numbers[i][j-1]==0){
             numbers[i][j-1]=numbers[i][j];
@@ -177,6 +185,7 @@ public class GridNumber {
             for (int i =0; i < numbers.length; i++) {
                 for(int j=0;j<numbers[i].length;j++){
                     if(numbers[i][j]!=0){
+                        scorechangeup=0;
                         moveUp1(numbers,i,j);
                     }
                 }
@@ -192,6 +201,7 @@ public class GridNumber {
             numbers[i-1][j]+=numbers[i][j];
             numbers[i][j]=0;
             score+=numbers[i-1][j];
+            scorechangeup+=numbers[i-1][j];
             moveUp1(numbers,i-1,j);
         }else if(numbers[i-1][j]==0){
             numbers[i-1][j]=numbers[i][j];
@@ -204,6 +214,7 @@ public class GridNumber {
             for (int i =numbers.length-1; i >=0; i--) {
                 for(int j=0;j<numbers[i].length;j++){
                     if(numbers[i][j]!=0){
+                        scorechangedown=0;
                         moveDown1(numbers,i,j);
                     }
                 }
@@ -219,6 +230,7 @@ public class GridNumber {
             numbers[i+1][j]+=numbers[i][j];
             numbers[i][j]=0;
             score+=numbers[i+1][j];
+            scorechangedown+=numbers[i+1][j];
             moveDown1(numbers,i+1,j);
         }else if(numbers[i+1][j]==0){
             numbers[i+1][j]=numbers[i][j];
@@ -242,9 +254,7 @@ public class GridNumber {
     }
 
     public void removeGrid(int i, int j){
-        if(numbers[i][j]<=4){
             numbers[i][j]=0;
-        }
     }
 
     public boolean checkfull(){
@@ -294,5 +304,18 @@ public class GridNumber {
             System.out.println(Arrays.toString(line));
         }
     }
-}
 
+//    public int judgedown(){
+//        while(isMoveddown()){
+//            for (int i =numbers.length-1; i >=0; i--) {
+//                for(int j=0;j<numbers[i].length;j++){
+//                    if(numbers[i][j]!=0){
+//                        scorechangedown=0;
+//                        moveDown1(numbers,i,j);
+//                    }
+//                }
+//            }
+//        }
+//        return scorechangedown;
+//    }
+}

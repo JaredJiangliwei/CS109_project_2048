@@ -111,8 +111,8 @@ public class AiJudge {
         return moveddown;
     }
 
-    public AiJudge() {
-        this.numbers=new int[4][4];
+    public AiJudge(int x,int y) {
+        this.numbers=new int[x][y];
     }
 
 
