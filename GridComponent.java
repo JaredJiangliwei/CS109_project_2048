@@ -1,6 +1,4 @@
-package view;
 
-import util.ColorMap;
 
 import javax.swing.*;
 import java.awt.*;
@@ -69,4 +67,3 @@ public class GridComponent extends JComponent {
         this.number = number;
     }
 }
-

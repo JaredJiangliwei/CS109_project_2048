@@ -1,4 +1,4 @@
-package view;
+
 
 public class CountdownTimer {
     private int seconds;

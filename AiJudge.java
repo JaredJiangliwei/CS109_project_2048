@@ -1,4 +1,4 @@
-package model;
+
 
 import java.util.Arrays;
 import java.util.Random;
@@ -354,4 +354,3 @@ public class AiJudge {
         this.scorechangedown = scorechangedown;
     }
 }
-

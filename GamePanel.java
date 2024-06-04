@@ -1,7 +1,4 @@
-package view;
 
-import model.GridNumber;
-import util.BGM;
 
 import java.io.IOException;
 import java.util.Random;
@@ -112,7 +109,7 @@ public class GamePanel extends ListenerPanel {
             }catch (NullPointerException e){
 
             }
-            new Thread(BGM::GameOverSoundEffect).start();
+            new Thread(SoundEffectPlayer::GameOverSoundEffect).start();
             JOptionPane.showMessageDialog(null, "Game Over！");
             dead=false;
             System.out.println("game over");
@@ -131,7 +128,7 @@ public class GamePanel extends ListenerPanel {
             for (int i = 0; i < grids.length; i++) {
                 for (int j = 0; j < grids[i].length; j++) {
                     if (model.getNumber(i,j)==2048&&has2048MadeBefore==false) {
-                        new Thread(BGM::VictorySoundEffect).start();
+                        new Thread(SoundEffectPlayer::VictorySoundEffect).start();
                         JOptionPane.showMessageDialog(null, "恭喜合成2048");
                         has2048MadeBefore = true;
                     }

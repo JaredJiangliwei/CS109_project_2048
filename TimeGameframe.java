@@ -1,8 +1,4 @@
-package view;
 
-import controller.GameController;
-import util.ColorMap;
-import util.SoundEffectPlayer;
 
 import javax.swing.*;
 import java.awt.*;
@@ -100,8 +96,13 @@ public class TimeGameframe extends JFrame {
                                 int xnumber = Integer.parseInt(x.trim());
                                 int ynumber = Integer.parseInt(y.trim());
                                 // 检查整数是否大于0
-                                if (xnumber>4||ynumber>4) {
+                                if (xnumber>=4||ynumber>=4) {
                                     JOptionPane.showMessageDialog(null, "输入数字过大，请重新输入。", "错误", JOptionPane.ERROR_MESSAGE);
+                                    xField.setText("");
+                                    yField.setText("");
+                                    // 获取新的输入（在实际应用中，这一步可能通过再次显示对话框或等待用户输入来实现）
+                                    // 由于这里是示例，我们假设用户下一次点击按钮时会输入新的值
+                                    return; // 等待用户再次点击按钮
                                 } else if (xnumber >= 0 && ynumber>=0) {
                                     isValid = true; // 输入是正整数
                                     diyFrame.setVisible(false);

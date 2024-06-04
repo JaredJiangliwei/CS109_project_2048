@@ -1,4 +1,4 @@
-package util;
+
 
 
 import java.awt.*;
@@ -41,5 +41,4 @@ public class ColorMap {
         return colorMap.getOrDefault(i, Color.black);
     }
 }
-
 

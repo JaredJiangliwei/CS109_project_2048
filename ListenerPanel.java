@@ -1,6 +1,4 @@
-package view;
 
-import util.BGM;
 
 import javax.swing.*;
 import java.awt.*;
@@ -24,19 +22,19 @@ public abstract class ListenerPanel extends JPanel {
             switch (e.getKeyCode()) {
                 case KeyEvent.VK_RIGHT :
                     doMoveRight();
-                    new Thread(BGM::SlideSoundEffect).start();
+                    new Thread(SoundEffectPlayer::SlideSoundEffect).start();
                     break;
                 case KeyEvent.VK_LEFT :
                     doMoveLeft();
-                    new Thread(BGM::SlideSoundEffect).start();
+                    new Thread(SoundEffectPlayer::SlideSoundEffect).start();
                     break;
                 case KeyEvent.VK_UP :
                     doMoveUp();
-                    new Thread(BGM::SlideSoundEffect).start();
+                    new Thread(SoundEffectPlayer::SlideSoundEffect).start();
                     break;
                 case KeyEvent.VK_DOWN :
                     doMoveDown();
-                    new Thread(BGM::SlideSoundEffect).start();
+                    new Thread(SoundEffectPlayer::SlideSoundEffect).start();
                     break;
                 //todo: complete other move event
             }
@@ -61,4 +59,3 @@ public abstract class ListenerPanel extends JPanel {
     public abstract void doMoveDown();
 
 }
-

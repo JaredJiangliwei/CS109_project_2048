@@ -1,9 +1,4 @@
-package view;
 
-import controller.GameController;
-import model.AiJudge;
-import util.ColorMap;
-import util.SoundEffectPlayer;
 
 import javax.swing.*;
 import java.awt.*;
@@ -70,7 +65,7 @@ public class GameFrame extends JFrame {
             else if(isAIOn==true){
                 isAIOn=false;
             }
-            int delay = 800; // 毫秒
+            int delay = 100; // 毫秒
             ActionListener taskPerformer = new ActionListener() {
                 public void actionPerformed(ActionEvent evt) {
                     if(isAIOn==false){
